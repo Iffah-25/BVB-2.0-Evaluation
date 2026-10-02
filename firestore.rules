@@ -1,0 +1,66 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isValidScore(val) {
+      return val is number && val >= 0 && val <= 5;
+    }
+
+    function isValidTotalScore(val) {
+      return val is number && val >= 0 && val <= 25;
+    }
+
+    function isValidEvaluation(data) {
+      return data.judgeId is string && data.judgeId.size() <= 64
+        && data.problemStatementId is string && data.problemStatementId.size() <= 64
+        && data.teamId is string && data.teamId.size() <= 64
+        && isValidScore(data.creativity)
+        && isValidScore(data.technicalImplementation)
+        && isValidScore(data.innovation)
+        && isValidScore(data.feasibility)
+        && isValidScore(data.presentation)
+        && isValidTotalScore(data.totalScore);
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Test connection document
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    // Evaluations collection for real-time judge scoring and live leaderboard
+    match /evaluations/{evaluationId} {
+      allow read: if true;
+      allow create: if isValidEvaluation(request.resource.data);
+      allow update: if isValidEvaluation(request.resource.data);
+      allow delete: if true;
+    }
+
+    // Judge assignments
+    match /judgeAssignments/{assignmentId} {
+      allow read, write: if true;
+    }
+
+    // Event global configuration
+    match /eventConfig/{configId} {
+      allow read, write: if true;
+    }
+
+    // Problem statements, teams, and judges collections
+    match /problemStatements/{psId} {
+      allow read, write: if true;
+    }
+
+    match /teams/{teamId} {
+      allow read, write: if true;
+    }
+
+    match /judges/{judgeId} {
+      allow read, write: if true;
+    }
+  }
+}

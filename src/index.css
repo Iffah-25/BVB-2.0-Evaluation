@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bvb-bg-dark: #12090b;
+    --bvb-bg-chocolate: #180d10;
+    --bvb-purple: #9d4edd;
+    --bvb-purple-glow: #c77dff;
+    --bvb-orange: #ff6b00;
+    --bvb-orange-glow: #ff9100;
+    --bvb-gold: #ffd166;
+    --bvb-gold-glow: #ffe6a7;
+    --bvb-ivory: #fffbf5;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #12090b;
+    background-image: 
+      radial-gradient(ellipse at 50% 10%, rgba(157, 78, 221, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 85% 30%, rgba(255, 107, 0, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 15% 70%, rgba(255, 209, 102, 0.04) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, #0d0608 0%, #160c0e 100%);
+    background-attachment: fixed;
+    color: #fffbf5;
+    min-height: 100vh;
+  }
+
+  /* Custom cyber scrollbars */
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #140a0c;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #3b1824;
+    border-radius: 4px;
+    border: 1px solid #ff6b0040;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #5c2438;
+  }
+}
+
+/* Futuristic Cyber / Tech Utilities */
+.font-orbitron {
+  font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Angular Tech Beveled Box */
+.bvb-frame {
+  position: relative;
+  background: linear-gradient(135deg, rgba(28, 14, 18, 0.95) 0%, rgba(18, 9, 12, 0.95) 100%);
+  border: 1px solid rgba(157, 78, 221, 0.35);
+  box-shadow: 
+    0 10px 30px -10px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 107, 0, 0.25),
+    inset 0 0 15px rgba(157, 78, 221, 0.05);
+}
+
+.bvb-frame:hover {
+  border-color: rgba(255, 107, 0, 0.55);
+  box-shadow: 
+    0 12px 35px -8px rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(255, 107, 0, 0.15),
+    inset 0 1px 0 rgba(255, 209, 102, 0.4);
+}
+
+/* Chamfered Tech Corners */
+.bvb-cut-corner {
+  clip-path: polygon(
+    0 12px, 
+    12px 0, 
+    calc(100% - 12px) 0, 
+    100% 12px, 
+    100% calc(100% - 12px), 
+    calc(100% - 12px) 100%, 
+    12px 100%, 
+    0 calc(100% - 12px)
+  );
+}
+
+/* Dual Neon Border: Purple Left/Top, Orange Right/Bottom */
+.bvb-dual-border {
+  border: 1px solid transparent;
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  background-image: 
+    linear-gradient(to bottom right, #1a0d11, #12090b),
+    linear-gradient(135deg, #9d4edd 0%, #ffd166 40%, #ff6b00 100%);
+}
+
+/* Technical HUD Crosshair / Caliper Marks */
+.bvb-hud-corner {
+  position: relative;
+}
+.bvb-hud-corner::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid #ff6b00;
+  border-left: 2px solid #ff6b00;
+  pointer-events: none;
+}
+.bvb-hud-corner::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 10px;
+  height: 10px;
+  border-bottom: 2px solid #9d4edd;
+  border-right: 2px solid #9d4edd;
+  pointer-events: none;
+}
+
+/* Subtle Technical Grid Lines in background */
+.bvb-tech-grid {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(157, 78, 221, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 107, 0, 0.04) 1px, transparent 1px);
+}
+
+/* Glow effects */
+.glow-purple {
+  text-shadow: 0 0 12px rgba(157, 78, 221, 0.6);
+}
+.glow-orange {
+  text-shadow: 0 0 12px rgba(255, 107, 0, 0.6);
+}
+.glow-gold {
+  text-shadow: 0 0 12px rgba(255, 209, 102, 0.6);
+}
+
+@media print {
+  body {
+    background-color: #ffffff !important;
+    background-image: none !important;
+    color: #000000 !important;
+  }
+  .print\:hidden {
+    display: none !important;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    border: 1px solid #d1d5db !important;
+    color: #000000 !important;
+  }
+}

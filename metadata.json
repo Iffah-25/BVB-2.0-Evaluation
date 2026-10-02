@@ -1,0 +1,6 @@
+{
+  "name": "Hackathon Evaluation Portal",
+  "description": "Real-time web-based hackathon evaluation portal for 15 problem statements, 30 teams, and 8 judges with simultaneous side-by-side scoring and live leaderboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

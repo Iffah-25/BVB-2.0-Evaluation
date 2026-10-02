@@ -1,0 +1,135 @@
+{
+  "entities": {
+    "Evaluation": {
+      "title": "Evaluation",
+      "description": "Evaluation score sheet submitted by a judge for a specific team in a problem statement",
+      "type": "object",
+      "properties": {
+        "judgeId": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "judgeName": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "problemStatementId": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "teamId": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "teamName": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "creativity": {
+          "type": "number"
+        },
+        "technicalImplementation": {
+          "type": "number"
+        },
+        "innovation": {
+          "type": "number"
+        },
+        "feasibility": {
+          "type": "number"
+        },
+        "presentation": {
+          "type": "number"
+        },
+        "totalScore": {
+          "type": "number"
+        },
+        "feedback": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "submitted", "unlocked"]
+        },
+        "submittedAt": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "updatedAt": {
+          "type": "string",
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "judgeId",
+        "problemStatementId",
+        "teamId",
+        "creativity",
+        "technicalImplementation",
+        "innovation",
+        "feasibility",
+        "presentation",
+        "totalScore",
+        "status"
+      ]
+    },
+    "JudgeAssignment": {
+      "title": "JudgeAssignment",
+      "description": "Assignment record linking a judge to a problem statement",
+      "type": "object",
+      "properties": {
+        "judgeId": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "problemStatementId": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "assignedAt": {
+          "type": "string",
+          "maxLength": 64
+        }
+      },
+      "required": ["judgeId", "problemStatementId"]
+    },
+    "EventConfig": {
+      "title": "EventConfig",
+      "description": "Central event parameters and settings",
+      "type": "object",
+      "properties": {
+        "minRequiredJudges": {
+          "type": "number"
+        },
+        "showIncompleteTeams": {
+          "type": "boolean"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "maxLength": 64
+        }
+      },
+      "required": ["minRequiredJudges", "showIncompleteTeams"]
+    }
+  },
+  "firestore": {
+    "/evaluations/{evaluationId}": {
+      "schema": {
+        "$ref": "#/entities/Evaluation"
+      },
+      "description": "Evaluation documents for teams by judges"
+    },
+    "/judgeAssignments/{assignmentId}": {
+      "schema": {
+        "$ref": "#/entities/JudgeAssignment"
+      },
+      "description": "Assignments of judges to problem statements"
+    },
+    "/eventConfig/{configId}": {
+      "schema": {
+        "$ref": "#/entities/EventConfig"
+      },
+      "description": "Global event configuration settings"
+    }
+  }
+}
