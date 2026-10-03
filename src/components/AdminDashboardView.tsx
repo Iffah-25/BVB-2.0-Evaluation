@@ -673,6 +673,49 @@ export const AdminDashboardView: React.FC = () => {
             </div>
           </div>
 
+          {/* Firebase Credentials & Database Connection Details */}
+          <div className="bg-[#180d11] border border-purple-900/60 p-5 rounded-xl space-y-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-sm font-orbitron font-bold text-white flex items-center space-x-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block animate-pulse" />
+                  <span>Firebase Credentials & Connection Config</span>
+                </h3>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Live Firestore database configuration provisioned for this application.
+                </p>
+              </div>
+
+              <a
+                href="https://console.firebase.google.com/project/studio-9616154876-12878/firestore/databases/ai-studio-0a43b2d0-ea3a-48f6-8f99-958a45a91a48/data"
+                target="_blank"
+                rel="noreferrer"
+                className="px-3 py-1.5 rounded-lg bg-orange-600 hover:bg-orange-500 text-black text-xs font-orbitron font-bold transition-all shadow"
+              >
+                Open in Firebase Console ↗
+              </a>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono pt-2">
+              <div className="p-3 bg-[#12080a] rounded-lg border border-purple-900/40">
+                <span className="text-[10px] text-slate-500 uppercase block font-orbitron">Firebase Project ID</span>
+                <span className="text-orange-400 font-bold select-all">studio-9616154876-12878</span>
+              </div>
+              <div className="p-3 bg-[#12080a] rounded-lg border border-purple-900/40">
+                <span className="text-[10px] text-slate-500 uppercase block font-orbitron">Firestore Database ID</span>
+                <span className="text-purple-300 font-bold select-all">ai-studio-0a43b2d0-ea3a-48f6-8f99-958a45a91a48</span>
+              </div>
+              <div className="p-3 bg-[#12080a] rounded-lg border border-purple-900/40">
+                <span className="text-[10px] text-slate-500 uppercase block font-orbitron">Auth Domain</span>
+                <span className="text-slate-300 select-all">studio-9616154876-12878.firebaseapp.com</span>
+              </div>
+              <div className="p-3 bg-[#12080a] rounded-lg border border-purple-900/40">
+                <span className="text-[10px] text-slate-500 uppercase block font-orbitron">Storage Bucket</span>
+                <span className="text-slate-300 select-all">studio-9616154876-12878.firebasestorage.app</span>
+              </div>
+            </div>
+          </div>
+
           <div className="bg-[#180d11] border border-purple-900/60 p-5 rounded-xl">
             <h3 className="text-sm font-orbitron font-bold text-white mb-2">Event Operations & Data Reset</h3>
             <div className="flex flex-wrap gap-3">

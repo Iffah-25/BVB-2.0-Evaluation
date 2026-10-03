@@ -274,6 +274,13 @@ export const HackathonProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           // Sort by id
           remoteJudges.sort((a, b) => a.id.localeCompare(b.id));
           setJudges(remoteJudges);
+        } else {
+          // Automatically populate initial judges in Firestore
+          const batch = writeBatch(db);
+          INITIAL_JUDGES.forEach(j => {
+            batch.set(doc(db, 'judges', j.id), j);
+          });
+          batch.commit().catch(err => console.warn('Judge init notice:', err));
         }
       },
       (err) => console.warn('Judges sync notice:', err.message)
@@ -294,6 +301,13 @@ export const HackathonProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           });
           remotePS.sort((a, b) => a.id.localeCompare(b.id));
           setProblemStatements(remotePS);
+        } else {
+          // Automatically populate initial problem statements in Firestore
+          const batch = writeBatch(db);
+          INITIAL_PROBLEM_STATEMENTS.forEach(ps => {
+            batch.set(doc(db, 'problemStatements', ps.id), ps);
+          });
+          batch.commit().catch(err => console.warn('PS init notice:', err));
         }
       },
       (err) => console.warn('PS sync notice:', err.message)
@@ -314,6 +328,13 @@ export const HackathonProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           });
           remoteTeams.sort((a, b) => a.teamNumber - b.teamNumber);
           setTeams(remoteTeams);
+        } else {
+          // Automatically populate initial teams in Firestore
+          const batch = writeBatch(db);
+          INITIAL_TEAMS.forEach(t => {
+            batch.set(doc(db, 'teams', t.id), t);
+          });
+          batch.commit().catch(err => console.warn('Teams init notice:', err));
         }
       },
       (err) => console.warn('Teams sync notice:', err.message)
@@ -330,6 +351,9 @@ export const HackathonProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         if (docSnap.exists()) {
           const data = docSnap.data() as EventConfig;
           setEventConfig(prev => ({ ...prev, ...data }));
+        } else {
+          // Initialize eventConfig in Firestore
+          setDoc(configDocRef, INITIAL_EVENT_CONFIG).catch(err => console.warn('Config init notice:', err));
         }
       },
       (error) => console.warn('Config sync notice:', error.message)
