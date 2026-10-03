@@ -57,11 +57,13 @@ export function exportLeaderboardPDF(
   doc.text(`Total Ranked Teams: ${entries.length} | 15 Problem Statements`, pageWidth - 14, 26, { align: 'right' });
   doc.text(`Evaluation Standard: 5 Criteria (Max 25 pts)`, pageWidth - 14, 34, { align: 'right' });
 
-  // Prepare table data
+  // Prepare table data with Lab and Role
   const tableRows = entries.map(entry => [
     entry.rank === 1 ? '★ #1' : `#${entry.rank}`,
     entry.teamName,
+    entry.teamRole || '—',
     entry.problemStatementId,
+    entry.lab || '—',
     `${entry.evaluationsCount}/${entry.requiredEvaluations}`,
     entry.isComplete ? 'Complete' : `Pending (${entry.evaluationsCount}/${entry.requiredEvaluations})`,
     entry.evaluationsCount > 0 ? `${entry.averageScore.toFixed(2)} / 25` : '—',
@@ -71,13 +73,13 @@ export function exportLeaderboardPDF(
   // Generate AutoTable
   autoTable(doc, {
     startY: 52,
-    head: [['Rank', 'Team Name', 'Statement', 'Judges', 'Status', 'Avg Score', 'Percentage']],
+    head: [['Rank', 'Team Name', 'Role', 'PS', 'Lab', 'Judges', 'Status', 'Avg Score', 'Percentage']],
     body: tableRows,
     theme: 'grid',
     styles: {
       font: 'helvetica',
-      fontSize: 8.5,
-      cellPadding: 2.8,
+      fontSize: 8,
+      cellPadding: 2.5,
       lineColor: [230, 220, 230],
       lineWidth: 0.15,
       textColor: [30, 20, 25]
@@ -90,13 +92,15 @@ export function exportLeaderboardPDF(
       lineWidth: 0.3
     },
     columnStyles: {
-      0: { halign: 'center', fontStyle: 'bold', cellWidth: 16 },
+      0: { halign: 'center', fontStyle: 'bold', cellWidth: 14 },
       1: { fontStyle: 'bold' },
-      2: { halign: 'center', fontStyle: 'bold', cellWidth: 24, textColor: [157, 78, 221] },
-      3: { halign: 'center', cellWidth: 20 },
-      4: { halign: 'center', cellWidth: 28 },
-      5: { halign: 'right', fontStyle: 'bold', cellWidth: 26 },
-      6: { halign: 'right', fontStyle: 'bold', cellWidth: 24, textColor: [220, 90, 0] }
+      2: { halign: 'center', cellWidth: 18 },
+      3: { halign: 'center', fontStyle: 'bold', cellWidth: 16, textColor: [157, 78, 221] },
+      4: { halign: 'center', fontStyle: 'bold', cellWidth: 18, textColor: [255, 107, 0] },
+      5: { halign: 'center', cellWidth: 18 },
+      6: { halign: 'center', cellWidth: 24 },
+      7: { halign: 'right', fontStyle: 'bold', cellWidth: 22 },
+      8: { halign: 'right', fontStyle: 'bold', cellWidth: 20, textColor: [220, 90, 0] }
     },
     alternateRowStyles: {
       fillColor: [250, 246, 248]

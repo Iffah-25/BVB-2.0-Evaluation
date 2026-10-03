@@ -17,18 +17,21 @@ export const LeaderboardView: React.FC = () => {
   const { getLeaderboard, problemStatements, eventConfig, updateEventConfig } = useHackathon();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPS, setSelectedPS] = useState('all');
+  const [selectedLab, setSelectedLab] = useState('all');
   const [downloadSuccess, setDownloadSuccess] = useState(false);
 
   const leaderboardEntries = getLeaderboard();
 
   const filtered = leaderboardEntries.filter(entry => {
     if (selectedPS !== 'all' && entry.problemStatementId !== selectedPS) return false;
+    if (selectedLab !== 'all' && entry.lab !== selectedLab) return false;
     if (!eventConfig.showIncompleteTeams && !entry.isComplete) return false;
 
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       return entry.teamName.toLowerCase().includes(q) ||
         entry.projectTitle.toLowerCase().includes(q) ||
+        (entry.lab && entry.lab.toLowerCase().includes(q)) ||
         entry.problemStatementId.toLowerCase().includes(q);
     }
     return true;
@@ -247,6 +250,22 @@ export const LeaderboardView: React.FC = () => {
             </select>
           </div>
 
+          {/* Lab Dropdown */}
+          <div className="flex items-center space-x-1.5">
+            <span className="text-xs text-slate-400 font-mono">Lab:</span>
+            <select
+              value={selectedLab}
+              onChange={(e) => setSelectedLab(e.target.value)}
+              className="bg-[#1c0f14] border border-purple-800/60 text-amber-400 font-orbitron font-bold text-xs rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-orange-500"
+            >
+              <option value="all">All Labs</option>
+              <option value="Lab 414">Lab 414</option>
+              <option value="Lab 413">Lab 413</option>
+              <option value="Lab 412">Lab 412</option>
+              <option value="Lab 411">Lab 411</option>
+            </select>
+          </div>
+
           {/* Toggle incomplete */}
           <label className="flex items-center space-x-2 text-xs text-slate-300 cursor-pointer bg-[#1c0f14] px-3 py-1.5 rounded-lg border border-purple-900/50 hover:border-orange-500/50 select-none">
             <input
@@ -280,8 +299,9 @@ export const LeaderboardView: React.FC = () => {
               <tr className="bg-[#13070a] border-b border-purple-900/60 text-[11px] font-orbitron uppercase tracking-wider text-purple-300">
                 <th className="py-3.5 px-4 text-center w-16">Rank</th>
                 <th className="py-3.5 px-4">Team</th>
-                <th className="py-3.5 px-4">Problem Statement</th>
-                <th className="py-3.5 px-4 text-center">Judges Evaluated</th>
+                <th className="py-3.5 px-4">Statement</th>
+                <th className="py-3.5 px-3 text-center">Lab</th>
+                <th className="py-3.5 px-4 text-center">Judges</th>
                 <th className="py-3.5 px-4 text-center">Status</th>
                 <th className="py-3.5 px-4 text-right">Average Score</th>
                 <th className="py-3.5 px-4 text-right">Percentage</th>
@@ -309,13 +329,28 @@ export const LeaderboardView: React.FC = () => {
                   </td>
 
                   <td className="py-3.5 px-4">
-                    <div className="font-bold text-white font-sans text-sm">{entry.teamName}</div>
+                    <div className="flex items-center space-x-1.5">
+                      {entry.teamRole && (
+                        <span className={`text-[9px] font-orbitron font-extrabold px-1.5 py-0.2 rounded border ${
+                          entry.teamRole === 'Team A' ? 'bg-orange-950 text-orange-400 border-orange-800/60' : 'bg-purple-950 text-purple-400 border-purple-800/60'
+                        }`}>
+                          {entry.teamRole}
+                        </span>
+                      )}
+                      <span className="font-bold text-white font-sans text-sm">{entry.teamName}</span>
+                    </div>
                     <div className="text-[11px] text-slate-400 mt-0.5">{entry.projectTitle}</div>
                   </td>
 
                   <td className="py-3.5 px-4 font-mono font-bold text-orange-400">
                     <span className="bg-orange-950/60 border border-orange-800/60 px-2 py-0.5 rounded text-[11px]">
                       {entry.problemStatementId}
+                    </span>
+                  </td>
+
+                  <td className="py-3.5 px-3 text-center font-orbitron font-bold text-amber-300">
+                    <span className="bg-[#1f1017] border border-amber-800/50 px-2 py-0.5 rounded text-[10px]">
+                      {entry.lab || 'Lab 414'}
                     </span>
                   </td>
 

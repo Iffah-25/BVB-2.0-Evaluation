@@ -22,6 +22,7 @@ export interface ProblemStatement {
   category: string;
   description: string;
   teamIds: [string, string]; // exactly 2 teams
+  lab?: string; // e.g. "Lab 414"
 }
 
 export interface Team {
@@ -33,6 +34,8 @@ export interface Team {
   description: string;
   members: string[];
   techStack: string[];
+  lab?: string;
+  teamRole?: 'Team A' | 'Team B';
 }
 
 export interface EvaluationScores {
@@ -70,7 +73,9 @@ export interface JudgeAssignment {
 }
 
 export interface EventConfig {
+  eventName?: string;
   minRequiredJudges: number;
+  evaluationLockMode?: 'strict' | 'relaxed';
   showIncompleteTeams: boolean;
   parameters: EvaluationParameter[];
   lastUpdated?: string;
@@ -88,6 +93,8 @@ export interface TeamLeaderboardEntry {
   isComplete: boolean;
   averageScore: number; // e.g. 22.33
   percentage: number; // e.g. 89.32
+  lab?: string;
+  teamRole?: 'Team A' | 'Team B';
   judgeScores: {
     judgeId: string;
     judgeName: string;

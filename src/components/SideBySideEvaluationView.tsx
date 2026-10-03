@@ -199,6 +199,11 @@ export const SideBySideEvaluationView: React.FC = () => {
               <span className="font-orbitron text-xs font-extrabold px-2.5 py-0.5 rounded bg-orange-600 text-black">
                 {currentPS.code}
               </span>
+              {currentPS.lab && (
+                <span className="font-orbitron text-[10px] font-bold text-amber-300 bg-amber-950/80 px-2 py-0.5 rounded border border-amber-700/80">
+                  {currentPS.lab}
+                </span>
+              )}
               <span className="text-xs text-purple-300 font-semibold font-orbitron">
                 {currentPS.category}
               </span>
